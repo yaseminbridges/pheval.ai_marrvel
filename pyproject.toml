@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "pheval-template"
+version = "0.1.0"
+description = ""
+authors = ["Yasemin Bridges <y.bridges@qmul.ac.uk>"]
+readme = "README.md"
+packages = [{include = "pheval_template", from = "src"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+pheval = {git = "https://github.com/monarch-initiative/pheval.git"}
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
