@@ -2,8 +2,8 @@ import json
 import random
 from pathlib import Path
 from typing import List
-from phenopackets import Phenopacket
 
+from phenopackets import Phenopacket
 from pheval.utils.phenopacket_utils import PhenopacketUtil, phenopacket_reader
 
 
@@ -28,8 +28,9 @@ class FakePredictor:
         predictions_with_scores = []
         for prediction in predictions:
             self.random_generator.seed()
-            predictions_with_scores.append({'gene_symbol': prediction,
-                                            'score': self.random_generator.uniform(0, 1)})
+            predictions_with_scores.append(
+                {"gene_symbol": prediction, "score": self.random_generator.uniform(0, 1)}
+            )
         return predictions_with_scores
 
 

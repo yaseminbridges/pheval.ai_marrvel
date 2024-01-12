@@ -22,11 +22,11 @@ class ConvertToPhEvalResult:
 
     @staticmethod
     def _obtain_score(result_entry: dict) -> float:
-        return result_entry['score']
+        return result_entry["score"]
 
     @staticmethod
     def _obtain_gene_symbol(result_entry: dict) -> str:
-        return result_entry['gene_symbol']
+        return result_entry["gene_symbol"]
 
     def obtain_gene_identifier(self, result_entry: dict) -> str:
         return self.gene_identifier_updator.find_identifier(self._obtain_gene_symbol(result_entry))
@@ -34,19 +34,28 @@ class ConvertToPhEvalResult:
     def extract_pheval_gene_requirements(self):
         pheval_result = []
         for result_entry in self.raw_result:
-            pheval_result.append(PhEvalGeneResult(gene_symbol=self._obtain_gene_symbol(result_entry),
-                                                  gene_identifier=self.obtain_gene_identifier(result_entry),
-                                                  score=self._obtain_score(result_entry)))
+            pheval_result.append(
+                PhEvalGeneResult(
+                    gene_symbol=self._obtain_gene_symbol(result_entry),
+                    gene_identifier=self.obtain_gene_identifier(result_entry),
+                    score=self._obtain_score(result_entry),
+                )
+            )
         return pheval_result
 
 
 def create_standardised_results(raw_results_dir: Path, output_dir: Path) -> None:
-    gene_identifier_updator = GeneIdentifierUpdater(gene_identifier="ensembl_id", hgnc_data=create_hgnc_dict())
+    gene_identifier_updator = GeneIdentifierUpdater(
+        gene_identifier="ensembl_id", hgnc_data=create_hgnc_dict()
+    )
     for raw_result_path in all_files(raw_results_dir):
         raw_result = read_raw_result(raw_result_path)
-        pheval_result = ConvertToPhEvalResult(raw_result, gene_identifier_updator).extract_pheval_gene_requirements()
-        generate_pheval_result(pheval_result=pheval_result,
-                               sort_order_str="DESCENDING",
-                               output_dir=output_dir,
-                               tool_result_path=raw_result_path)
-
+        pheval_result = ConvertToPhEvalResult(
+            raw_result, gene_identifier_updator
+        ).extract_pheval_gene_requirements()
+        generate_pheval_result(
+            pheval_result=pheval_result,
+            sort_order_str="DESCENDING",
+            output_dir=output_dir,
+            tool_result_path=raw_result_path,
+        )

@@ -10,6 +10,4 @@ def run_tool(phenopacket_dir: Path, output_dir: Path) -> None:
     hgnc_dict = create_hgnc_dict()
     gene_list = list(hgnc_dict.keys())
     for phenopacket_path in all_files(phenopacket_dir):
-        predict_case(phenopacket_path=phenopacket_path,
-                     gene_list=gene_list,
-                     output_dir=output_dir)
+        predict_case(phenopacket_path=phenopacket_path, gene_list=gene_list, output_dir=output_dir)
