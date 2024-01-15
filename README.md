@@ -29,11 +29,25 @@ The testdata directory should include the subdirectory named `phenopackets` - wh
 # Run command
 
 ```bash
-pheval run --input_dir /path/to/input_dir \
+pheval run --input-dir /path/to/input_dir \
 --runner templatephevalrunner \
---output_dir /path/to/output_dir \
---testdata_dir /path/to/testdata_dir
+--output-dir /path/to/output_dir \
+--testdata-dir /path/to/testdata_dir
 ```
+
+# Analyse
+
+You can benchmark the run with the `pheval-utils benchmark` command:
+
+```bash
+pheval-utils benchmark --directory /path/to/output_directoy \
+--phenopacket-dir /path/to/phenopacket_dir \
+--output-prefix OUTPUT_PREFIX \
+--gene-analysis \
+--plot-type bar_cumulative
+```
+
+The path provided to the `--directory` parameter should be the same as the one provided to the `--output-dir` in the `pheval run` command
 
 # Personalising to your own tool
 
