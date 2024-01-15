@@ -17,18 +17,21 @@ class TemplatePhEvalRunner(PhEvalRunner):
     version: str
 
     def prepare(self):
-        """prepare method."""
-        # Any preprocessing required to run the tool should be carried out here.
-        # This could include, but is not limited to, writing a required tool config
-        # and preparing the test data in a compatible format
+        """
+        Pre-process any data and inputs necessary to run the tool.
+        """
         print("preparing")
 
     def run(self):
-        """run method."""
-        print("running with template pheval runner")
+        """
+        Run the tool to produce the raw output.
+        """
+        print("running with fake predictor")
         run(self.testdata_dir, self.raw_results_dir)
 
     def post_process(self):
-        """post_process method."""
-        print("post processing")
+        """
+        Post-process the raw output into PhEval standardised TSV output.
+        """
+        print("post processing results to PhEval standardised TSV output.")
         post_process(raw_results_dir=self.raw_results_dir, output_dir=self.output_dir)
