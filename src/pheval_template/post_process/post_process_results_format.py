@@ -25,6 +25,7 @@ def read_raw_result(raw_result_path: Path) -> List[dict]:
 
 class ConvertToPhEvalResult:
     """Class to convert the raw result file to PhEvalGeneResult."""
+
     def __init__(self, raw_result: List[dict], gene_identifier_updator: GeneIdentifierUpdater):
         """
         Initialise the ConvertToPhEvalResult class.

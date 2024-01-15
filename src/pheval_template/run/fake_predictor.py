@@ -9,6 +9,7 @@ from pheval.utils.phenopacket_utils import PhenopacketUtil, phenopacket_reader
 
 class FakePredictor:
     """Class for predicting genes using a fake predictor."""
+
     def __init__(self, phenopacket: Phenopacket, gene_list: List[str]):
         """
         Initialise the FakePredictor class.
