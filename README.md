@@ -43,3 +43,5 @@ If overriding this template to create your own runner implementation. There are 
 2. Once the name of the Runner class has been customised, line 15 in `pyproject.toml` should also be changed to match the class name, then run `poetry lock` and `poetry install`
 
 The runner you give on the CLI will then change to the name of the runner class.
+
+You should also remove the `src/pheval_template/run/fake_predictor.py` and implement the running of your own tool. Methods in the post-processing can also be altered to process your own tools output.
