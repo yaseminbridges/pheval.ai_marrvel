@@ -41,3 +41,5 @@ If overriding this template to create your own runner implementation. There are 
 
 1. The name of the Runner class in `src/pheval_template/runner.py` should be changed.
 2. Once the name of the Runner class has been customised, line 15 in `pyproject.toml` should also be changed to match the class name, then run `poetry lock` and `poetry install`
+
+The runner you give on the CLI will then change to the name of the runner class.
