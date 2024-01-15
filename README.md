@@ -35,7 +35,7 @@ pheval run --input-dir /path/to/input_dir \
 --testdata-dir /path/to/testdata_dir
 ```
 
-# Analyse
+# Benchmark
 
 You can benchmark the run with the `pheval-utils benchmark` command:
 
