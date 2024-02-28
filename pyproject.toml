@@ -8,7 +8,7 @@ packages = [{include = "pheval_template", from = "src"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
-pheval = {git = "https://github.com/monarch-initiative/pheval.git"}
+pheval = "^0.3.1"
 
 
 [tool.poetry.plugins."pheval.plugins"]
