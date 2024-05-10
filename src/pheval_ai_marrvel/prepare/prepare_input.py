@@ -7,7 +7,7 @@ from pheval.utils.phenopacket_utils import PhenopacketUtil, phenopacket_reader
 
 def obtain_observed_hpo_ids(phenopacket: Phenopacket) -> str:
     observed_phenotypes = PhenopacketUtil(phenopacket).observed_phenotypic_features()
-    observed_hpo_ids = [hpo_id.id for hpo_id in observed_phenotypes]
+    observed_hpo_ids = [hpo_id.type.id for hpo_id in observed_phenotypes]
     observed_hpo_ids = "/n".join(observed_hpo_ids)
     return observed_hpo_ids
 
