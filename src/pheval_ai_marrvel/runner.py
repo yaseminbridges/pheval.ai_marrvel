@@ -3,9 +3,13 @@ from pathlib import Path
 
 from pheval.runners.runner import PhEvalRunner
 
+from pheval_ai_marrvel.post_process.post_process import post_process_results
+from pheval_ai_marrvel.prepare.prepare import prepare_inputs
+from pheval_ai_marrvel.run.run import run_commands
+
 
 @dataclass
-class TemplatePhEvalRunner(PhEvalRunner):
+class AIMARRVELRunner(PhEvalRunner):
     input_dir: Path
     testdata_dir: Path
     tmp_dir: Path
@@ -18,15 +22,26 @@ class TemplatePhEvalRunner(PhEvalRunner):
         Pre-process any data and inputs necessary to run the tool.
         """
         print("preparing")
+        prepare_inputs(testdata_dir=self.testdata_dir)
 
     def run(self):
         """
         Run the tool to produce the raw output.
         """
         print("running with fake predictor")
+        run_commands(
+            tool_input_commands_dir=self.tool_input_commands_dir,
+            testdata_dir=self.testdata_dir,
+            input_dir=self.input_dir,
+            output_dir=self.output_dir,
+        )
 
     def post_process(self):
         """
         Post-process the raw output into PhEval standardised TSV output.
         """
         print("post processing results to PhEval standardised TSV output.")
+        post_process_results(
+            raw_results_dir=self.raw_results_dir,
+            output_dir=self.output_dir,
+        )
