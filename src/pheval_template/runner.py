@@ -3,6 +3,9 @@ from pathlib import Path
 
 from pheval.runners.runner import PhEvalRunner
 
+from pheval_template.post_process.post_process import post_process
+from pheval_template.run.run import run
+
 
 @dataclass
 class TemplatePhEvalRunner(PhEvalRunner):
@@ -24,9 +27,11 @@ class TemplatePhEvalRunner(PhEvalRunner):
         Run the tool to produce the raw output.
         """
         print("running with fake predictor")
+        run(self.testdata_dir, self.raw_results_dir)
 
     def post_process(self):
         """
         Post-process the raw output into PhEval standardised TSV output.
         """
         print("post processing results to PhEval standardised TSV output.")
+        post_process(raw_results_dir=self.raw_results_dir, output_dir=self.output_dir)
