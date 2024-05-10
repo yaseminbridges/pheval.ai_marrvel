@@ -1,10 +1,10 @@
 [tool.poetry]
-name = "pheval-template"
+name = "pheval-ai-marrvel"
 version = "0.1.0"
 description = ""
 authors = ["Yasemin Bridges <y.bridges@qmul.ac.uk>"]
 readme = "README.md"
-packages = [{include = "pheval_template", from = "src"}]
+packages = [{include = "pheval_ai_marrvel", from = "src"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
@@ -12,7 +12,7 @@ pheval = "^0.3.2"
 
 
 [tool.poetry.plugins."pheval.plugins"]
-template = "pheval_template.runner:TemplatePhEvalRunner"
+template = "pheval_ai_marrvel.runner:TemplatePhEvalRunner"
 
 [tool.poetry.dev-dependencies]
 pytest = "^7.1.2"
