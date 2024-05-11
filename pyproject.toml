@@ -10,6 +10,8 @@ packages = [{include = "pheval_ai_marrvel", from = "src"}]
 python = "^3.10"
 pheval = "^0.3.2"
 
+[tool.poetry.scripts]
+pheval-ai = "pheval_ai_marrvel.cli:main"
 
 [tool.poetry.plugins."pheval.plugins"]
 template = "pheval_ai_marrvel.runner:AIMARRVELRunner"
