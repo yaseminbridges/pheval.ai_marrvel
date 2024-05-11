@@ -11,13 +11,13 @@ def post_process_results(raw_results_dir: Path, output_dir: Path) -> None:
 
 @click.command()
 @click.option(
-    "--raw_results_dir",
+    "--raw-results-dir",
     "-r",
     type=Path,
 )
 @click.option(
-    "--output_dir",
-    "-r",
+    "--output-dir",
+    "-o",
     type=Path,
 )
 def post_process(raw_results_dir: Path, output_dir: Path) -> None:
