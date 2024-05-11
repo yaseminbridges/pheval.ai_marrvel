@@ -24,7 +24,7 @@ def get_apptainer_arguments(
         phenopacket_path, testdata_dir.joinpath("vcf")
     )
     return ApptainerArguments(
-        sample_id=phenopacket.proband.id,
+        sample_id=phenopacket.subject.id,
         vcf_path=vcf_file_data.uri,
         vcf_assembly=vcf_file_data.file_attributes["genomeAssembly"],
         hpo_txt_file_path=testdata_dir.joinpath(f"hpo_ids/{phenopacket_path.stem}.txt"),
@@ -35,19 +35,19 @@ def get_apptainer_arguments(
 
 def create_apptainer_command(apptainer_arguments: ApptainerArguments) -> str:
     return (
-        f"apptainer run --mount type=bind,source={apptainer_arguments.vcf_path}, destination=/input/vcf.gz"
-        f"--mount type=bind,source={apptainer_arguments.hpo_txt_file_path},destination=/input/hpo.txt"
-        f"--mount type=bind,source={apptainer_arguments.data_dependencies},destination=/run/data_dependencies"
-        f"--mount type=bind,source={apptainer_arguments.output_directory}, destination=/out"
-        f"docker://chaozhongliu/aim-lite /run/proc.sh {apptainer_arguments.sample_id} "
-        f"{apptainer_arguments.vcf_assembly} 32"
+        f"apptainer run --mount type=bind,source={apptainer_arguments.vcf_path},destination=/input/vcf.gz"
+        f" --mount type=bind,source={apptainer_arguments.hpo_txt_file_path},destination=/input/hpo.txt"
+        f" --mount type=bind,source={apptainer_arguments.data_dependencies},destination=/run/data_dependencies"
+        f" --mount type=bind,source={apptainer_arguments.output_directory},destination=/out"
+        f" docker://chaozhongliu/aim-lite /run/proc.sh {apptainer_arguments.sample_id}"
+        f" {apptainer_arguments.vcf_assembly} 32"
     )
 
 
-def write_commands(commands: List[str], tool_input_commands_dir: Path) -> None:
+def write_commands(commands: List[str], tool_input_commands_dir: Path, testdata_dir: Path) -> None:
     joined_commands_str = "\n".join(commands)
     with open(
-        f"{tool_input_commands_dir.joinpath('apptainer_commands.txt')}", "w"
+        f"{tool_input_commands_dir.joinpath(f'{testdata_dir.name}_commands.txt')}", "w"
     ) as commands_file:
         commands_file.write(joined_commands_str)
     commands_file.close()
@@ -62,4 +62,4 @@ def create_apptainer_commands(
             phenopacket_path, testdata_dir, input_dir, output_dir
         )
         all_commands.append(create_apptainer_command(apptainer_arguments))
-    write_commands(all_commands, tool_input_commands_dir)
+    write_commands(all_commands, tool_input_commands_dir, testdata_dir)
