@@ -148,7 +148,7 @@ def create_standardised_results(raw_results_dir: Path, output_dir: Path) -> None
     gene_identifier_updator = GeneIdentifierUpdater(
         gene_identifier="ensembl_id", hgnc_data=create_hgnc_dict()
     )
-    raw_results = [file for file in all_files(raw_results_dir) if "_integrated.tsv" in file.name]
+    raw_results = [file for file in all_files(raw_results_dir) if "_integrated.csv" in file.name]
     for raw_result_path in raw_results:
         raw_result = read_raw_result(raw_result_path)
         converter = ConvertToPhEvalResult(raw_result, gene_identifier_updator)
