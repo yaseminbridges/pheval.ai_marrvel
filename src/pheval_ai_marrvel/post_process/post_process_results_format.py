@@ -124,6 +124,7 @@ class ConvertToPhEvalResult:
         for result_entry in self.raw_result.rows(named=True):
             pheval_result.append(
                 PhEvalVariantResult(
+                    score=self._obtain_score(result_entry),
                     chromosome=self.obtain_chrom(result_entry["variant"]),
                     start=self.obtain_pos(result_entry["variant"]),
                     end=calculate_end_pos(
