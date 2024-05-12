@@ -19,16 +19,16 @@ class AIMARRVELRunner(PhEvalRunner):
 
     def prepare(self):
         """
-        Pre-process any data and inputs necessary to run the tool.
+        Pre-process phenopackets into tool accepted format.
         """
-        print("preparing")
+        print("creating HPO txt files from phenopackets")
         prepare_inputs(testdata_dir=self.testdata_dir)
 
     def run(self):
         """
-        Run the tool to produce the raw output.
+        Run AI-MARRVEL to produce the raw output.
         """
-        print("running with fake predictor")
+        print("running with AI-MARRVEL")
         run_commands(
             tool_input_commands_dir=self.tool_input_commands_dir,
             testdata_dir=self.testdata_dir,

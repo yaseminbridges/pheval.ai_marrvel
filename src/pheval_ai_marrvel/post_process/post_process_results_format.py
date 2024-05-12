@@ -20,7 +20,7 @@ def read_raw_result(raw_result_path: Path) -> pl.DataFrame:
         raw_result_path(Path): Path to the raw result file.
 
     Returns:
-        List[dict]: Contents of the raw result file.
+        pl.DataFrame: Contents of the raw result file.
     """
     raw_result = pl.read_csv(raw_result_path)
     raw_result = raw_result.rename({"Unnamed: 0": "variant"})
@@ -81,18 +81,54 @@ class ConvertToPhEvalResult:
 
     @staticmethod
     def obtain_chrom(variant_str: str) -> str:
+        """
+        Obtain the chromosome from the variant entry.
+
+        Args:
+            variant_str (str): Variant entry.
+
+        Returns:
+            str: The chromosome.
+        """
         return variant_str.split("-")[0]
 
     @staticmethod
     def obtain_pos(variant_str: str) -> int:
+        """
+        Obtain the position from the variant entry.
+
+        Args:
+            variant_str (str): Variant entry.
+
+        Returns:
+            int: The position.
+        """
         return int(variant_str.split("-")[1])
 
     @staticmethod
     def obtain_ref(variant_str: str) -> str:
+        """
+        Obtain the reference allele from the variant entry.
+
+        Args:
+            variant_str (str): Variant entry.
+
+        Returns:
+            str: The reference allele.
+        """
         return variant_str.split("-")[2]
 
     @staticmethod
     def obtain_alt(variant_str: str) -> str:
+        """
+        Obtain the alternate allele from the variant entry.
+
+        Args:
+            variant_str (str): Variant entry.
+
+        Returns:
+            str: The alternate allele.
+        """
         return variant_str.split("-")[3]
 
     def extract_pheval_gene_requirements(self) -> List[PhEvalGeneResult]:
@@ -140,7 +176,7 @@ class ConvertToPhEvalResult:
 
 def create_standardised_results(raw_results_dir: Path, output_dir: Path) -> None:
     """
-    Create PhEval gene tsv output from raw results.
+    Create PhEval gene and variant tsv output from raw results.
 
     Args:
         raw_results_dir (Path): Path to the raw results directory.

@@ -5,7 +5,7 @@ from pheval_ai_marrvel.post_process.post_process import post_process
 
 @click.group()
 def main():
-    """Exomiser runner."""
+    """AI-MARRVEL runner."""
 
 
 main.add_command(post_process)
