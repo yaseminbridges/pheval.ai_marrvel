@@ -9,6 +9,7 @@ packages = [{include = "pheval_ai_marrvel", from = "src"}]
 [tool.poetry.dependencies]
 python = "^3.10"
 pheval = "^0.3.2"
+docker = "^7.1.0"
 
 [tool.poetry.scripts]
 pheval-ai = "pheval_ai_marrvel.cli:main"
