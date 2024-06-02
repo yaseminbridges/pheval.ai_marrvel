@@ -6,6 +6,7 @@ from pheval.runners.runner import PhEvalRunner
 from pheval_ai_marrvel.post_process.post_process import post_process_results
 from pheval_ai_marrvel.prepare.prepare import prepare_inputs
 from pheval_ai_marrvel.run.run import run_commands
+from pheval_ai_marrvel.tool_specific_configuration_options import AIMARRVELConfigurations
 
 
 @dataclass
@@ -29,11 +30,15 @@ class AIMARRVELRunner(PhEvalRunner):
         Run AI-MARRVEL to produce the raw output.
         """
         print("running with AI-MARRVEL")
+        config = AIMARRVELConfigurations.parse_config(
+            self.input_dir_config.tool_specific_configuration_options
+        )
         run_commands(
             tool_input_commands_dir=self.tool_input_commands_dir,
             testdata_dir=self.testdata_dir,
             input_dir=self.input_dir,
             output_dir=self.output_dir,
+            environment=config.environment,
         )
 
     def post_process(self):
