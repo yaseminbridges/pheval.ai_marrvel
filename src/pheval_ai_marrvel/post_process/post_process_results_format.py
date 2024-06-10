@@ -25,9 +25,12 @@ def read_raw_result(raw_result_path: Path) -> pl.DataFrame:
     raw_result = pl.read_csv(raw_result_path)
     raw_result = raw_result.rename({"Unnamed: 0": "variant"})
     raw_result = raw_result.select(pl.col(["variant", "predict", "geneSymbol", "ranking"]))
-    grouped_gene_symbols = raw_result.group_by("variant", maintain_order=True).agg(
-        pl.col("geneSymbol").unique(maintain_order=True)).select(pl.col("geneSymbol")).rename(
-        {"geneSymbol": "groupedGeneSymbol"})
+    grouped_gene_symbols = (
+        raw_result.group_by("variant", maintain_order=True)
+        .agg(pl.col("geneSymbol").unique(maintain_order=True))
+        .select(pl.col("geneSymbol"))
+        .rename({"geneSymbol": "groupedGeneSymbol"})
+    )
     raw_result = raw_result.unique(subset=["variant"], maintain_order=True)
     raw_result = raw_result.hstack(grouped_gene_symbols)
     return raw_result
@@ -84,7 +87,10 @@ class ConvertToPhEvalResult:
             str: The gene identifier.
         """
         gene_symbols = self._obtain_gene_symbol(result_entry)
-        return [self.gene_identifier_updater.find_identifier(gene_symbol) for gene_symbol in gene_symbols]
+        return [
+            self.gene_identifier_updater.find_identifier(gene_symbol)
+            for gene_symbol in gene_symbols
+        ]
 
     @staticmethod
     def obtain_chrom(variant_str: str) -> str:
