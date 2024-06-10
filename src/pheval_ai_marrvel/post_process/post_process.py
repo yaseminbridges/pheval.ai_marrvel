@@ -35,4 +35,6 @@ def post_process(raw_results_dir: Path, output_dir: Path) -> None:
         raw_results_dir (Path): Path to the raw results directory.
         output_dir (Path): Path to the output directory.
     """
+    output_dir.joinpath("pheval_gene_results").mkdir(exist_ok=True)
+    output_dir.joinpath("pheval_variant_results").mkdir(exist_ok=True)
     post_process_results(raw_results_dir, output_dir)

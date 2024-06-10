@@ -24,7 +24,16 @@ def read_raw_result(raw_result_path: Path) -> pl.DataFrame:
     """
     raw_result = pl.read_csv(raw_result_path)
     raw_result = raw_result.rename({"Unnamed: 0": "variant"})
-    return raw_result.select(pl.col(["variant", "predict", "geneSymbol"]))
+    raw_result = raw_result.select(pl.col(["variant", "predict", "geneSymbol", "ranking"]))
+    grouped_gene_symbols = (
+        raw_result.group_by("variant", maintain_order=True)
+        .agg(pl.col("geneSymbol").unique(maintain_order=True))
+        .select(pl.col("geneSymbol"))
+        .rename({"geneSymbol": "groupedGeneSymbol"})
+    )
+    raw_result = raw_result.unique(subset=["variant"], maintain_order=True)
+    raw_result = raw_result.hstack(grouped_gene_symbols)
+    return raw_result
 
 
 class ConvertToPhEvalResult:
@@ -55,7 +64,7 @@ class ConvertToPhEvalResult:
         return result_entry["predict"]
 
     @staticmethod
-    def _obtain_gene_symbol(result_entry: dict) -> str:
+    def _obtain_gene_symbol(result_entry: dict) -> List[str]:
         """
         Obtain the gene symbol from the result entry.
 
@@ -65,9 +74,9 @@ class ConvertToPhEvalResult:
         Returns:
             str: The gene symbol.
         """
-        return result_entry["geneSymbol"]
+        return result_entry["groupedGeneSymbol"]
 
-    def obtain_gene_identifier(self, result_entry: dict) -> str:
+    def obtain_gene_identifier(self, result_entry: dict) -> List[str]:
         """
         Obtain the gene identifier from the result entry.
 
@@ -77,7 +86,11 @@ class ConvertToPhEvalResult:
         Returns:
             str: The gene identifier.
         """
-        return self.gene_identifier_updater.find_identifier(self._obtain_gene_symbol(result_entry))
+        gene_symbols = self._obtain_gene_symbol(result_entry)
+        return [
+            self.gene_identifier_updater.find_identifier(gene_symbol)
+            for gene_symbol in gene_symbols
+        ]
 
     @staticmethod
     def obtain_chrom(variant_str: str) -> str:
