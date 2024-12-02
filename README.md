@@ -10,6 +10,12 @@ poetry install
 poetry shell
 ```
 
+Alternative install with pip
+
+```shell
+pip install pheval-ai-marrvel
+```
+
 # Configuring a single run:
 
 ## Setting up the input directory
@@ -22,6 +28,7 @@ variant_analysis: True
 gene_analysis: True
 disease_analysis: False
 tool_specific_configuration_options:
+  environment: nextflow # either apptainer/docker/nextflow
 ```
 
 The AI-MARRVEL data dependencies should also be unpacked into the input directory. The overall structure of the input directory should look something like:
