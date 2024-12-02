@@ -31,7 +31,6 @@ The AI-MARRVEL data dependencies should also be unpacked into the input director
 ├── annotate
 ├── bcf_annotate 
 ├── config.yaml
-├── download.err 
 ├── filter_vep
 ├── merge_expand
 ├── mod5_diffusion
