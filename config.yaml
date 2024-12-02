@@ -4,4 +4,4 @@ variant_analysis: True
 gene_analysis: True
 disease_analysis: False
 tool_specific_configuration_options:
-  environment: apptainer # either apptainer or docker
+  environment: nextflow # either apptainer/docker/nextflow
