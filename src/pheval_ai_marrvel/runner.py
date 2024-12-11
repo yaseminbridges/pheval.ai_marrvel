@@ -37,7 +37,7 @@ class AIMARRVELRunner(PhEvalRunner):
             tool_input_commands_dir=self.tool_input_commands_dir,
             testdata_dir=self.testdata_dir,
             input_dir=self.input_dir,
-            output_dir=self.output_dir,
+            output_dir=self.raw_results_dir,
             environment=config.environment,
         )
 
