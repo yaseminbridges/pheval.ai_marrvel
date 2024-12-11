@@ -30,7 +30,7 @@ class NextFlowParameters:
 
 
 def get_next_flow_parameters(
-        phenopacket_path: Path, testdata_dir: Path, input_dir: Path, output_dir: Path
+    phenopacket_path: Path, testdata_dir: Path, input_dir: Path, output_dir: Path
 ):
     """
     Get next flow parameters for a sample.
@@ -83,14 +83,14 @@ def write_commands(commands: List[str], tool_input_commands_dir: Path, testdata_
     """
     joined_commands_str = "\n".join(commands)
     with open(
-            f"{tool_input_commands_dir.joinpath(f'{testdata_dir.name}_commands.txt')}", "w"
+        f"{tool_input_commands_dir.joinpath(f'{testdata_dir.name}_commands.txt')}", "w"
     ) as commands_file:
         commands_file.write(joined_commands_str)
     commands_file.close()
 
 
 def create_nextflow_commands(
-        tool_input_commands_dir: Path, testdata_dir: Path, input_dir: Path, output_dir: Path
+    tool_input_commands_dir: Path, testdata_dir: Path, input_dir: Path, output_dir: Path
 ) -> None:
     """
     Create nextflow commands for running AI-MARRVEL with a corpus.
