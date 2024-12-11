@@ -30,7 +30,7 @@ class NextFlowParameters:
 
 
 def get_next_flow_parameters(
-    phenopacket_path: Path, testdata_dir: Path, input_dir: Path, output_dir: Path
+        phenopacket_path: Path, testdata_dir: Path, input_dir: Path, output_dir: Path
 ):
     """
     Get next flow parameters for a sample.
@@ -44,6 +44,11 @@ def get_next_flow_parameters(
     vcf_file_data = PhenopacketUtil(phenopacket).vcf_file_data(
         phenopacket_path, testdata_dir.joinpath("vcf")
     )
+    genome_assembly = vcf_file_data.file_attributes["genomeAssembly"].lower()
+    if genome_assembly == "grch37":
+        genome_assembly = "hg19"
+    elif genome_assembly == "grch38":
+        genome_assembly = "hg38"
     return NextFlowParameters(
         executable=input_dir.joinpath("AI_MARRVEL/main.nf"),
         ref_dir=input_dir,
@@ -51,19 +56,19 @@ def get_next_flow_parameters(
         input_hpo=testdata_dir.joinpath(f"hpo_ids/{phenopacket_path.stem}.txt"),
         output_dir=output_dir,
         sample_id=phenopacket.subject.id,
-        reference_version=vcf_file_data.file_attributes["genomeAssembly"],
+        reference_version=genome_assembly,
     )
 
 
 def create_next_flow_command(next_flow_parameters: NextFlowParameters) -> str:
     return (
         f"nextflow run {next_flow_parameters.executable} "
-        f"--ref-dir {next_flow_parameters.ref_dir} "
-        f"--input-vcf {next_flow_parameters.input_vcf} "
-        f"--input-hpo {next_flow_parameters.input_hpo} "
+        f"--ref_dir {next_flow_parameters.ref_dir} "
+        f"--input_vcf {next_flow_parameters.input_vcf} "
+        f"--input_hpo {next_flow_parameters.input_hpo} "
         f"--outdir {next_flow_parameters.output_dir} "
-        f"--run-id {next_flow_parameters.sample_id} "
-        f"--ref-ver {next_flow_parameters.reference_version}"
+        f"--run_id {next_flow_parameters.sample_id} "
+        f"--ref_ver {next_flow_parameters.reference_version}"
     )
 
 
@@ -78,14 +83,14 @@ def write_commands(commands: List[str], tool_input_commands_dir: Path, testdata_
     """
     joined_commands_str = "\n".join(commands)
     with open(
-        f"{tool_input_commands_dir.joinpath(f'{testdata_dir.name}_commands.txt')}", "w"
+            f"{tool_input_commands_dir.joinpath(f'{testdata_dir.name}_commands.txt')}", "w"
     ) as commands_file:
         commands_file.write(joined_commands_str)
     commands_file.close()
 
 
 def create_nextflow_commands(
-    tool_input_commands_dir: Path, testdata_dir: Path, input_dir: Path, output_dir: Path
+        tool_input_commands_dir: Path, testdata_dir: Path, input_dir: Path, output_dir: Path
 ) -> None:
     """
     Create nextflow commands for running AI-MARRVEL with a corpus.

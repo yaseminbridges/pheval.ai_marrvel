@@ -56,9 +56,14 @@ def get_sample_data(phenopacket_path: Path, vcf_dir: Path) -> SampleData:
     """
     phenopacket_util = PhenopacketUtil(phenopacket_reader(phenopacket_path))
     vcf_data = phenopacket_util.vcf_file_data(phenopacket_path, vcf_dir)
+    genome_assembly = vcf_data.file_attributes["genomeAssembly"].lower()
+    if genome_assembly == "grch37":
+        genome_assembly = "hg19"
+    elif genome_assembly == "grch38":
+        genome_assembly = "hg38"
     return SampleData(
-        sample_id=phenopacket_util.sample_id(),
-        genome_assembly=vcf_data.file_attributes["genomeAssembly"],
+        sample_id=phenopacket_path.stem,
+        genome_assembly=genome_assembly,
         vcf_name=vcf_data.uri,
     )
 

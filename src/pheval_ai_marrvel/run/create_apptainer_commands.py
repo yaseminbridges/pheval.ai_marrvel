@@ -47,10 +47,15 @@ def get_apptainer_arguments(
     vcf_file_data = PhenopacketUtil(phenopacket).vcf_file_data(
         phenopacket_path, testdata_dir.joinpath("vcf")
     )
+    genome_assembly = vcf_file_data.file_attributes["genomeAssembly"].lower()
+    if genome_assembly == "grch37":
+        genome_assembly = "hg19"
+    elif genome_assembly == "grch38":
+        genome_assembly = "hg38"
     return ApptainerArguments(
-        sample_id=phenopacket.subject.id,
+        sample_id=phenopacket_path.stem,
         vcf_path=vcf_file_data.uri,
-        vcf_assembly=vcf_file_data.file_attributes["genomeAssembly"],
+        vcf_assembly=genome_assembly,
         hpo_txt_file_path=testdata_dir.joinpath(f"hpo_ids/{phenopacket_path.stem}.txt"),
         data_dependencies=input_dir,
         output_directory=output_dir,
